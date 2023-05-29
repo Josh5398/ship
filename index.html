@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
+</head>
+<body>
+<canvas id="Canvas1" width="500" height="500"></canvas>
+  <button id="left" onclick="left()">LEFT</button>
+  <button id="right" onclick="right()">RIGHT</button>
+
+<script>
+var c1 = document.getElementById("Canvas1");
+var ct1 = c1.getContext("2d");
+var p, s=12, ang, a=0, turn=0
+var shp={x:200, y:200}
+var ar=[ 7,5.585, 5,5.76, 4,.175, 3.5,.349, 3.7,.524, 5,1.571, 
+        3.7,2.618, 3.5,2.793, 4,2.967, 5,3.665, 7,3.84, 7,5.585, 5.90,5.4,
+        7.5,4.712,   // flame length item 26
+        5.9,4.024]
+
+function drawShp(flame){
+ p=0
+ a+=turn
+ turn*=.8
+ ar[26]=flame
+ ct1.beginPath()
+ ang=ar[1]+a
+ ct1.moveTo(shp.x + s*ar[0]*Math.cos(ang), shp.y- s*ar[0]*Math.sin(ang) ) 
+ for(p=2; p<ar.length; p+=2){
+  ang=ar[p+1]+a
+  ct1.lineTo(shp.x+ s*ar[p]*Math.cos(ang), shp.y - s*ar[p]*Math.sin(ang))
+ }
+ ct1.stroke()
+} 
+ 
+function loop(){
+  ct1.clearRect(0,0,500,500)
+  drawShp(5.7+3*Math.random() )
+}
+  function right(){ turn-=.04}
+  function left(){ turn+=.04}
+
+   setInterval(loop,50)
+    </script>
+  </body>
+</html>
